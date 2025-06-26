@@ -31,9 +31,10 @@ export async function run() {
       const auth = !token ? undefined : `token ${token}`;
 
       const checkLatest = core.getBooleanInput('check-latest');
-
+      const proxyurl = core.getBooleanInput('proxy-url');
       const installDir = await installer.getGo(
         versionSpec,
+        proxyurl,
         checkLatest,
         auth,
         arch

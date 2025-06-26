@@ -37,6 +37,7 @@ export interface IGoVersionInfo {
 
 export async function getGo(
   versionSpec: string,
+  proxyurl: string,
   checkLatest: boolean,
   auth: string | undefined,
   arch = os.arch()
@@ -104,6 +105,9 @@ export async function getGo(
   try {
     info = await getInfoFromManifest(versionSpec, true, auth, arch, manifest);
     if (info) {
+      if (proxyurl.length != 0) {
+        info.downloadUrl = proxyurl + info.downloadUrl;
+      }
       downloadPath = await installGoVersion(info, auth, arch);
     } else {
       core.info(
@@ -138,6 +142,9 @@ export async function getGo(
 
     try {
       core.info('Install from dist');
+      if (proxyurl.length != 0) {
+        info.downloadUrl = proxyurl + info.downloadUrl;
+      }
       downloadPath = await installGoVersion(info, undefined, arch);
     } catch (err) {
       throw new Error(`Failed to download version ${versionSpec}: ${err}`);
