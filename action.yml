@@ -17,6 +17,7 @@ inputs:
     default: true
   proxy-url:
     description: 'Used to fetch go distributions from a proxy server. proxy-url + go-download-url'
+    default: ""
   cache-dependency-path:
     description: 'Used to specify the path to a dependency file - go.sum'
   architecture:
